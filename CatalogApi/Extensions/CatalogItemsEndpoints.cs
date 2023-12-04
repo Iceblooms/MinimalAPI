@@ -15,33 +15,40 @@
 
         static async Task<IResult> GetAllCatalogItems(CatalogItemDb db)
         {
-            return TypedResults.Ok(await db.Items.ToArrayAsync());
+            return TypedResults.Ok(await db.Items.Select(ci => new CatalogItemDTO(ci)).ToArrayAsync());
         }
 
         static async Task<IResult> GetCatalogItem(int id, CatalogItemDb db)
         {
             return await db.Items.FindAsync(id)
                 is CatalogItem item
-                    ? TypedResults.Ok(item)
+                    ? TypedResults.Ok(new CatalogItemDTO(item))
                     : TypedResults.NotFound();
         }
 
-        static async Task<IResult> CreateCatalogItem(CatalogItem catalogItem, CatalogItemDb db)
+        static async Task<IResult> CreateCatalogItem(CatalogItemDTO catalogItemDTO, CatalogItemDb db)
         {
+            var catalogItem = new CatalogItem
+            {
+                Name = catalogItemDTO.Name,
+                Description = catalogItemDTO.Description,
+            };
+
             db.Items.Add(catalogItem);
             await db.SaveChangesAsync();
 
-            return TypedResults.Created($"/catalog/{catalogItem.Id}", catalogItem);
+            catalogItemDTO = new CatalogItemDTO(catalogItem);
+            return TypedResults.Created($"/catalog/{catalogItem.Id}", catalogItemDTO);
         }
 
-        static async Task<IResult> UpdateCatalogItem(int id, CatalogItem inputCatalogItem, CatalogItemDb db)
+        static async Task<IResult> UpdateCatalogItem(int id, CatalogItemDTO inputCatalogItemDTO, CatalogItemDb db)
         {
             var catalogItem = await db.Items.FindAsync(id);
 
             if (catalogItem is null) return TypedResults.NotFound();
 
-            catalogItem.Name = inputCatalogItem.Name;
-            catalogItem.Description = inputCatalogItem.Description;
+            catalogItem.Name = inputCatalogItemDTO.Name;
+            catalogItem.Description = inputCatalogItemDTO.Description;
 
             await db.SaveChangesAsync();
 

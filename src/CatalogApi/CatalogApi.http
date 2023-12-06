@@ -1,0 +1,43 @@
+﻿@CatalogApi_HostAddress = http://localhost:5200
+
+GET {{CatalogApi_HostAddress}}/catalog/
+
+###
+
+POST {{CatalogApi_HostAddress}}/catalog/
+Content-Type: application/json
+
+{
+  "name":"Quantum X1",
+  "description":"Experience the future with the Quantum X1. This cutting-edge smartphone features a seamless design, an AI-powered camera, and lightning-fast processing for a truly immersive mobile experience."
+}
+
+###
+
+POST {{CatalogApi_HostAddress}}/catalog/
+Content-Type: application/json
+
+{
+  "name":"Velocity V9X",
+  "description":"Take your mobile gaming to the next level with the Velocity V9X. This powerhouse device combines a high-refresh-rate display, advanced graphics capabilities, and a superior cooling system to deliver unparalleled gaming performance."
+}
+
+###
+
+GET {{CatalogApi_HostAddress}}/catalog/1
+
+###
+
+PUT {{CatalogApi_HostAddress}}/catalog/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "EcoTech Pro",
+  "description": "The EcoTech Pro is not just a phone; it's a commitment to sustainability. Made from eco-friendly materials, this smartphone boasts energy-efficient features and a powerful battery for a greener and smarter life."
+}
+###
+
+DELETE {{CatalogApi_HostAddress}}/catalog/2
+
+###

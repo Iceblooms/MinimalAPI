@@ -13,5 +13,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.RegisterCatalogItemsEndpoints();
+app.RegisterDateTimeEndpoints();
 
 app.Run();

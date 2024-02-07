@@ -1,4 +1,6 @@
-﻿namespace CatalogApi.Extensions
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+
+namespace CatalogApi.Extensions
 {
     public static class CatalogItemsEndpoints
     {
